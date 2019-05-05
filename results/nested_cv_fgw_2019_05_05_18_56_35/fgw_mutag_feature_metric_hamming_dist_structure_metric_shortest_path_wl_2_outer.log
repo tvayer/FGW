@@ -1,0 +1,193 @@
+2019-05-05 18:56:35,580 INFO Let the Outer CV Begin for fgw_mutag_feature_metric_hamming_dist_structure_metric_shortest_path_wl_2
+2019-05-05 18:56:35,580 INFO n_outer : 50
+2019-05-05 18:56:35,580 INFO n_inner : 10
+2019-05-05 18:56:36,288 INFO ############ Begin nested CV ############
+2019-05-05 18:56:36,288 INFO Inner : 10
+2019-05-05 18:56:36,288 INFO Outer : 50
+2019-05-05 18:56:36,289 INFO params : [{'wl': [2], 'alpha': [0.0, 1e-06, 1.778279410038923e-05, 0.00031622776601683794, 0.005623413251903491, 0.1, 0.25000049999999996, 0.49999999999999994, 0.7499995, 0.9, 0.9943765867480965, 0.9996837722339832, 0.9999822172058996, 0.999999, 1.0], 'C': [0.0001, 0.0003727593720314938, 0.0013894954943731374, 0.005179474679231213, 0.019306977288832496, 0.07196856730011514, 0.2682695795279725, 1.0, 3.727593720314938, 13.89495494373136, 51.79474679231202, 193.06977288832496, 719.6856730011514, 2682.695795279722, 10000.0], 'method': ['shortest_path'], 'gamma': [0.0009765625, 0.002628711313735071, 0.007075966127061773, 0.019047088346944928, 0.05127095975047737, 0.1380111892092266, 0.37149857228423705, 1.0, 2.6918003852647128, 7.2457893141112555, 19.504218467271617, 52.501462784488865, 141.32345775024794, 380.4145380190592, 1024.0], 'features_metric': ['hamming_dist'], 'amijo': [False]}]
+2019-05-05 18:56:36,302 INFO Begin precomputing all distances matrices
+2019-05-05 18:56:36,302 INFO 15 matrices to fit...
+2019-05-05 19:10:52,365 INFO ...Done
+2019-05-05 19:10:58,943 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:11:05,465 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:11:11,961 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:11:18,500 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:11:25,105 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:11:31,665 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:11:38,173 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:11:44,685 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:11:51,255 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:11:57,870 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:11:57,870 INFO ############ One inner CV Done ############
+2019-05-05 19:11:57,925 INFO Best params : {'gamma': 2.6918003852647128, 'alpha': 0.1, 'C': 13.89495494373136, 'method': 'shortest_path', 'wl': 2, 'features_metric': 'hamming_dist', 'amijo': False}
+2019-05-05 19:11:57,925 INFO Best inner score : 0.9113970588235294
+2019-05-05 19:11:57,929 INFO Outer accuracy 0.8947368421052632
+2019-05-05 19:11:57,929 INFO ############ One outer Done ############
+2019-05-05 19:12:04,547 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:12:11,208 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:12:17,778 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:12:24,402 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:12:30,981 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:12:38,265 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:12:45,107 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:12:51,878 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:13:00,373 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:13:08,555 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:13:08,555 INFO ############ One inner CV Done ############
+2019-05-05 19:13:08,607 INFO Best params : {'gamma': 0.1380111892092266, 'alpha': 1.778279410038923e-05, 'C': 13.89495494373136, 'method': 'shortest_path', 'wl': 2, 'features_metric': 'hamming_dist', 'amijo': False}
+2019-05-05 19:13:08,608 INFO Best inner score : 0.9113970588235294
+2019-05-05 19:13:08,610 INFO Outer accuracy 0.8947368421052632
+2019-05-05 19:13:08,610 INFO ############ One outer Done ############
+2019-05-05 19:13:15,858 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:13:23,847 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:13:30,795 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:13:37,777 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:13:45,694 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:13:53,166 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:14:01,128 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:14:08,259 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:14:15,328 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:14:22,370 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:14:22,371 INFO ############ One inner CV Done ############
+2019-05-05 19:14:22,424 INFO Best params : {'gamma': 2.6918003852647128, 'alpha': 0.49999999999999994, 'C': 3.727593720314938, 'method': 'shortest_path', 'wl': 2, 'features_metric': 'hamming_dist', 'amijo': False}
+2019-05-05 19:14:22,424 INFO Best inner score : 0.911315359477124
+2019-05-05 19:14:22,427 INFO Outer accuracy 1.0
+2019-05-05 19:14:22,428 INFO ############ One outer Done ############
+2019-05-05 19:14:29,865 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:14:37,572 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:14:44,776 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:14:51,609 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:14:58,495 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:15:05,224 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:15:12,206 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:15:19,681 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:15:26,915 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:15:35,035 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:15:35,035 INFO ############ One inner CV Done ############
+2019-05-05 19:15:35,088 INFO Best params : {'gamma': 0.37149857228423705, 'alpha': 0.1, 'C': 3.727593720314938, 'method': 'shortest_path', 'wl': 2, 'features_metric': 'hamming_dist', 'amijo': False}
+2019-05-05 19:15:35,089 INFO Best inner score : 0.9055147058823529
+2019-05-05 19:15:35,091 INFO Outer accuracy 0.9473684210526315
+2019-05-05 19:15:35,091 INFO ############ One outer Done ############
+2019-05-05 19:15:42,374 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:15:49,247 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:15:56,533 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:16:03,812 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:16:10,792 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:16:18,133 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:16:25,212 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:16:32,587 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:16:39,634 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:16:46,677 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:16:46,677 INFO ############ One inner CV Done ############
+2019-05-05 19:16:46,731 INFO Best params : {'gamma': 0.019047088346944928, 'alpha': 0.00031622776601683794, 'C': 193.06977288832496, 'method': 'shortest_path', 'wl': 2, 'features_metric': 'hamming_dist', 'amijo': False}
+2019-05-05 19:16:46,731 INFO Best inner score : 0.8993464052287582
+2019-05-05 19:16:46,733 INFO Outer accuracy 0.9473684210526315
+2019-05-05 19:16:46,733 INFO ############ One outer Done ############
+2019-05-05 19:16:53,608 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:17:01,139 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:17:07,750 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:17:15,447 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:17:22,360 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:17:28,970 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:17:36,149 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:17:43,025 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:17:49,769 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:17:56,748 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:17:56,748 INFO ############ One inner CV Done ############
+2019-05-05 19:17:56,800 INFO Best params : {'gamma': 0.002628711313735071, 'alpha': 0.1, 'C': 719.6856730011514, 'method': 'shortest_path', 'wl': 2, 'features_metric': 'hamming_dist', 'amijo': False}
+2019-05-05 19:17:56,801 INFO Best inner score : 0.91609477124183
+2019-05-05 19:17:56,803 INFO Outer accuracy 0.7894736842105263
+2019-05-05 19:17:56,803 INFO ############ One outer Done ############
+2019-05-05 19:18:04,014 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:18:11,495 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:18:18,882 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:18:26,091 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:18:33,576 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:18:41,233 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:18:50,015 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:18:56,886 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:19:03,530 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:19:10,706 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:19:10,706 INFO ############ One inner CV Done ############
+2019-05-05 19:19:10,759 INFO Best params : {'gamma': 2.6918003852647128, 'alpha': 0.49999999999999994, 'C': 3.727593720314938, 'method': 'shortest_path', 'wl': 2, 'features_metric': 'hamming_dist', 'amijo': False}
+2019-05-05 19:19:10,760 INFO Best inner score : 0.9045343137254902
+2019-05-05 19:19:10,763 INFO Outer accuracy 0.8947368421052632
+2019-05-05 19:19:10,763 INFO ############ One outer Done ############
+2019-05-05 19:19:18,070 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:19:25,629 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:19:33,125 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:19:40,433 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:19:48,236 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:19:56,111 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:20:03,717 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:20:11,048 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:20:18,539 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:20:26,075 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:20:26,075 INFO ############ One inner CV Done ############
+2019-05-05 19:20:26,129 INFO Best params : {'gamma': 1.0, 'alpha': 0.7499995, 'C': 3.727593720314938, 'method': 'shortest_path', 'wl': 2, 'features_metric': 'hamming_dist', 'amijo': False}
+2019-05-05 19:20:26,129 INFO Best inner score : 0.8816584967320262
+2019-05-05 19:20:26,132 INFO Outer accuracy 0.9473684210526315
+2019-05-05 19:20:26,132 INFO ############ One outer Done ############
+2019-05-05 19:20:34,394 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:20:41,169 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:20:48,082 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:20:55,519 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:21:02,792 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:21:09,926 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:21:17,027 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:21:24,717 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:21:32,392 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:21:39,914 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:21:39,914 INFO ############ One inner CV Done ############
+2019-05-05 19:21:39,973 INFO Best params : {'gamma': 0.0009765625, 'alpha': 0.005623413251903491, 'C': 2682.695795279722, 'method': 'shortest_path', 'wl': 2, 'features_metric': 'hamming_dist', 'amijo': False}
+2019-05-05 19:21:39,974 INFO Best inner score : 0.9051062091503267
+2019-05-05 19:21:39,981 INFO Outer accuracy 0.9473684210526315
+2019-05-05 19:21:39,981 INFO ############ One outer Done ############
+2019-05-05 19:21:47,270 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:21:54,392 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:22:01,688 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:22:09,174 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:22:16,730 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:22:24,786 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:22:33,200 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:22:40,603 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:22:47,482 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:22:55,313 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:22:55,313 INFO ############ One inner CV Done ############
+2019-05-05 19:22:55,366 INFO Best params : {'gamma': 0.1380111892092266, 'alpha': 0.005623413251903491, 'C': 13.89495494373136, 'method': 'shortest_path', 'wl': 2, 'features_metric': 'hamming_dist', 'amijo': False}
+2019-05-05 19:22:55,366 INFO Best inner score : 0.881454248366013
+2019-05-05 19:22:55,368 INFO Outer accuracy 1.0
+2019-05-05 19:22:55,368 INFO ############ One outer Done ############
+2019-05-05 19:23:01,929 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:23:08,822 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:23:15,860 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:23:22,793 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:23:29,839 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:23:36,556 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:23:44,429 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:23:51,681 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:23:59,265 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:24:06,848 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:24:06,849 INFO ############ One inner CV Done ############
+2019-05-05 19:24:06,916 INFO Best params : {'gamma': 0.007075966127061773, 'alpha': 0.1, 'C': 193.06977288832496, 'method': 'shortest_path', 'wl': 2, 'features_metric': 'hamming_dist', 'amijo': False}
+2019-05-05 19:24:06,917 INFO Best inner score : 0.8878676470588236
+2019-05-05 19:24:06,921 INFO Outer accuracy 0.8947368421052632
+2019-05-05 19:24:06,921 INFO ############ One outer Done ############
+2019-05-05 19:24:14,191 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:24:21,841 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:24:29,843 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:24:37,582 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:24:45,624 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:24:52,638 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:25:00,172 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:25:07,297 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:25:14,739 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:25:22,561 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:25:22,561 INFO ############ One inner CV Done ############
+2019-05-05 19:25:22,617 INFO Best params : {'gamma': 0.0009765625, 'alpha': 1e-06, 'C': 2682.695795279722, 'method': 'shortest_path', 'wl': 2, 'features_metric': 'hamming_dist', 'amijo': False}
+2019-05-05 19:25:22,617 INFO Best inner score : 0.8995098039215688
+2019-05-05 19:25:22,620 INFO Outer accuracy 0.9473684210526315
+2019-05-05 19:25:22,620 INFO ############ One outer Done ############
+2019-05-05 19:25:30,386 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:25:39,960 INFO ############ All params Done for one inner cut ############
+2019-05-05 19:25:47,989 INFO ############ All params Done for one inner cut ############

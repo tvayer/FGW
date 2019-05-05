@@ -1,0 +1,18 @@
+distances_path,None
+amijo,False
+data_path,../data
+verbose,1
+wl_feature,2
+n_inner,10
+optionnal_name,
+test,False
+gamma,-1
+dataset_name,mutag
+Csvm,-1
+attributes,True
+alpha,[0.5, 0.8]
+automatic_cv_alpha,False
+n_outer,50
+structure_metric,shortest_path
+feature_metric,hamming_dist
+log_dir,../results
