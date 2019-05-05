@@ -46,6 +46,16 @@ class GenericSVCClassifier(TransformerMixin):
         self.svc=SVC(C=self.C,kernel="precomputed",verbose=self.verbose,max_iter=10000000)
 
     def compute_similarity(self,x,y):
+        
+        """ Compute the similarity between x and y using the similarity_measure
+        Parameters
+        ----------
+        x : a abstract object
+        y : a astract object
+         Returns
+        -------
+        A float representative of the similarity
+        """
         start=time.time()
         try:
             similarity=self.similarity_measure(x,y)
@@ -60,7 +70,22 @@ class GenericSVCClassifier(TransformerMixin):
         self.similarity_measure_time.append(end-start)
         return similarity
 
-    def gram_matrix(self,X,Y,matrix=None,y=None,method='classic'):
+    def gram_matrix(self,X,Y,matrix=None,method='classic'):
+        """ Compute the similarity matrix K=exp{-gamma*f(x,y)} with f the similarity measure 
+        for all x,y in X and Y 
+        Parameters
+        ----------
+        X : array of abstract object
+        Y : array of abstract object
+        matrix : ndarray, optionnal
+                 If specified used to compute the similarity matrix instead of calculating all the similarities
+        method : string
+                 If equal to classic compute K=exp{-gamma*f(x,y)}, if equal to no_gaussian compute only f(x,y)
+         Returns
+        -------
+        D : ndarray
+            The gram matrix of all similarities K=exp{-gamma*f(x,y)} or f(x,y) if method='no_gaussian'
+        """
         self.compute_all_distance(X,Y,matrix)
         if method=='classic':
             Z=np.exp(-self.gamma*(self.D))
@@ -72,6 +97,17 @@ class GenericSVCClassifier(TransformerMixin):
             return self.D
 
     def fit(self,X,y=None,matrix=None):
+        """ Fit the SVM classifier on the similarity matrix 
+        Parameters
+        ----------
+        X : array of abstract object
+        y : classes of all objects
+        matrix : ndarray, optionnal
+                 If specified used to compute the similarity matrix instead of calculating all the similarities
+         Returns
+        -------
+        self
+        """
         self.classes_ =np.array(y)
         self._fit_X=np.array(X)
         Gtrain = np.zeros((X.shape[0],X.shape[0]))
@@ -87,6 +123,16 @@ class GenericSVCClassifier(TransformerMixin):
         return self
 
     def predict(self,X,matrix=None):
+        """ Apply the SVM classifier on X
+        Parameters
+        ----------
+        X : array of abstract object
+        matrix : ndarray, optionnal
+                 If specified used to compute the similarity matrix instead of calculating all the similarities
+         Returns
+        -------
+        self
+        """
         try :
             G=self.gram_matrix(X,self._fit_X,matrix,method='classic')
             preds=self.svc.predict(G)
@@ -103,11 +149,6 @@ class GenericSVCClassifier(TransformerMixin):
                 raise NotFittedError
         return preds
 
-    def get_start_end_indexes(self,n_support_):
-        start = [sum(n_support_[:i]) for i in range(len(n_support_))]
-        end = [start[i] + n_support_[i] for i in range(len(n_support_))]
-        return start,end
-
     def assert_all_finite(self,X):
         """Like assert_all_finite, but only for ndarray."""
         X = np.asanyarray(X)
@@ -120,8 +161,18 @@ class GenericSVCClassifier(TransformerMixin):
         else :
             return True
 
-    def compute_all_distance(self,X,Y,matrix=None): # Il faut stocker ce kernel en dessous
-
+    def compute_all_distance(self,X,Y,matrix=None): 
+        """ Compute all similarities f(x,y) for x,y in X and Y and f the similarity measure 
+        Parameters
+        ----------
+        X : array of abstract object
+        Y : array of abstract object
+        matrix : ndarray, optionnal
+                 If specified used to compute the similarity matrix instead of calculating all the similarities
+         Returns
+        -------
+        None. Set the similarity matrix
+        """
         if matrix is not None :
             self.D=matrix
 
@@ -168,7 +219,35 @@ class GenericSVCClassifier(TransformerMixin):
 
 
 class Graph_FGW_SVC_Classifier(GenericSVCClassifier):
+    """ Graph_FGW_SVC_Classifier is a generic class that inherit from GenericSVCClassifier. It uses the FGW as similarity measure
+    
+    Attributes
+    ----------    
+    gw : a Fused_Gromov_Wasserstein_distance instance
+         The Fused_Gromov_Wasserstein_distance class for computing FGW
+    alpha : float 
+            The alpha parameter of FGW
+    method : string
+             The name of the method used to compute the structures matrices of the graphs. See Graph class
+    max_iter : integer
+               Number of iteration of the FW algorithm for the computation of FGW.
+    features_metric : string
+                      The name of the method used to compute the cost matrix between the features
+                      For hamming_dist see experimental setup in [3]
+    transp : ndarray, shape (ns,nt) 
+           The transport matrix between the source distribution and the target distribution
+    amijo : bool, optionnal
+            If True the steps of the line-search is found via an amijo research. Else closed form is used.
+    wl : integer
+         Parameter Weisfeler-Lehman attributes. See experimental setup of [3]
+    References
+    ----------
+    .. [3] Vayer Titouan, Chapel Laetitia, Flamary R{\'e}mi, Tavenard Romain
+          and Courty Nicolas
+        "Optimal Transport for structured data with application on graphs"
+        International Conference on Machine Learning (ICML). 2019.
 
+    """
     def __init__(self,C=1,gamma=1,alpha=1,method='shortest_path',features_metric='sqeuclidean',verbose=False,always_raise=False,amijo=False,wl=0):
         
         
@@ -184,7 +263,7 @@ class Graph_FGW_SVC_Classifier(GenericSVCClassifier):
         self.amijo=amijo
         GenericSVCClassifier.__init__(self,C=C,gamma=gamma,similarity_measure=similarity_measure,verbose=verbose,always_raise=always_raise)
 
-    def fit(self,X,y=None,matrix=None):
+    def fit(self,X,y=None,matrix=None): #avoid recalculating all structures matrices if they already exist
         self.classes_ = y
         self._fit_X = list(X.reshape(X.shape[0],)) 
         for x in self._fit_X :
@@ -222,7 +301,7 @@ class Graph_FGW_SVC_Classifier(GenericSVCClassifier):
         self.svc=SVC(C=self.C,kernel="precomputed",verbose=self.verbose,max_iter=10000000)
 
         gw2=Fused_Gromov_Wasserstein_distance(alpha=self.alpha,method=self.method,features_metric=self.features_metric,amijo=self.amijo)
-        if self.gw.get_tuning_params()!=gw2.get_tuning_params():
+        if self.gw.get_tuning_params()!=gw2.get_tuning_params(): #if not same tuning param recreate a new FGW object because the similarity measure changes
             self.gw=Fused_Gromov_Wasserstein_distance(alpha=self.alpha,method=self.method,features_metric=self.features_metric,amijo=self.amijo)
             self.similarity_measure=self.gw.graph_d
 

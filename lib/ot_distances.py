@@ -76,7 +76,9 @@ class Fused_Gromov_Wasserstein_distance():
     as presented in [3]
     
     Attributes
-    ----------    
+    ----------  
+    alpha : float 
+            The alpha parameter of FGW
     method : string
              The name of the method used to compute the structures matrices of the graphs. See Graph class
     max_iter : integer
