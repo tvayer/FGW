@@ -238,6 +238,7 @@ class Graph_FGW_SVC_Classifier(GenericSVCClassifier):
            The transport matrix between the source distribution and the target distribution
     amijo : bool, optionnal
             If True the steps of the line-search is found via an amijo research. Else closed form is used.
+            If there is convergence issues use False.
     wl : integer
          Parameter Weisfeler-Lehman attributes. See experimental setup of [3]
     References
@@ -248,7 +249,7 @@ class Graph_FGW_SVC_Classifier(GenericSVCClassifier):
         International Conference on Machine Learning (ICML). 2019.
 
     """
-    def __init__(self,C=1,gamma=1,alpha=1,method='shortest_path',features_metric='sqeuclidean',verbose=False,always_raise=False,amijo=False,wl=0):
+    def __init__(self,C=1,gamma=1,alpha=1,method='shortest_path',features_metric='sqeuclidean',verbose=False,always_raise=False,amijo=True,wl=0):
         
         
         self.gw=Fused_Gromov_Wasserstein_distance(alpha=alpha,method=method,features_metric=features_metric,amijo=amijo)

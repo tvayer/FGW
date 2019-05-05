@@ -156,7 +156,7 @@ def gwggrad(constC,hC1,hC2,T):
           
     return 2*tensor_product(constC,hC1,hC2,T) 
 
-def gw_lp(C1,C2,p,q,loss_fun='square_loss',alpha=1,amijo=False,**kwargs): 
+def gw_lp(C1,C2,p,q,loss_fun='square_loss',alpha=1,amijo=True,**kwargs): 
 
     """
     Returns the gromov-wasserstein transport between (C1,p) and (C2,q)
@@ -192,6 +192,7 @@ def gw_lp(C1,C2,p,q,loss_fun='square_loss',alpha=1,amijo=False,**kwargs):
         record log if True
     amijo : bool, optional
         If True the step of the line-search is found via an amijo research. Else closed form is used.
+        If there is convergence issues use False.
     **kwargs : dict
         parameters can be directly pased to the ot.optim.cg solver
     Returns
@@ -223,7 +224,7 @@ def gw_lp(C1,C2,p,q,loss_fun='square_loss',alpha=1,amijo=False,**kwargs):
  
     return optim.cg(p,q,M,alpha,f,df,G0,amijo=amijo,constC=constC,C1=C1,C2=C2,**kwargs)
     
-def fgw_lp(M,C1,C2,p,q,loss_fun='square_loss',alpha=1,amijo=False,G0=None,**kwargs): 
+def fgw_lp(M,C1,C2,p,q,loss_fun='square_loss',alpha=1,amijo=True,G0=None,**kwargs): 
     """
     Computes the FGW distance between two graphs see [3]
     .. math::
@@ -260,6 +261,7 @@ def fgw_lp(M,C1,C2,p,q,loss_fun='square_loss',alpha=1,amijo=False,G0=None,**kwar
         record log if True
     amijo : bool, optional
         If True the steps of the line-search is found via an amijo research. Else closed form is used.
+        If there is convergence issues use False.
     **kwargs : dict
         parameters can be directly pased to the ot.optim.cg solver
     Returns

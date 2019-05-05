@@ -89,7 +89,8 @@ class Fused_Gromov_Wasserstein_distance():
     transp : ndarray, shape (ns,nt) 
            The transport matrix between the source distribution and the target distribution
     amijo : bool, optionnal
-            If True the steps of the line-search is found via an amijo research. Else closed form is used.        
+            If True the steps of the line-search is found via an amijo research. Else closed form is used.  
+            If there is convergence issues use False.
     References
     ----------
     .. [3] Vayer Titouan, Chapel Laetitia, Flamary R{\'e}mi, Tavenard Romain
@@ -98,7 +99,7 @@ class Fused_Gromov_Wasserstein_distance():
         International Conference on Machine Learning (ICML). 2019.
     """
 
-    def __init__(self,alpha=0.5,method='shortest_path',features_metric='sqeuclidean',max_iter=500,verbose=False,amijo=False): #remplacer method par distance_method  
+    def __init__(self,alpha=0.5,method='shortest_path',features_metric='sqeuclidean',max_iter=500,verbose=False,amijo=True): #remplacer method par distance_method  
         self.method=method
         self.max_iter=max_iter
         self.alpha=alpha

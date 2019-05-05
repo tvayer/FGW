@@ -229,7 +229,7 @@ if __name__ == '__main__':
     parser.add_argument('-g','--gamma', nargs='?',default=-1, type=float,help='Gamma parameter in Gaussian SVM. If not specified cross validated')
     parser.add_argument('-test','--test',nargs='?',help='wether to use a test version',type=utils.str2bool,default=False)
     parser.add_argument('-v','--verbose', nargs='?', default=1, type=int,help='verbose')
-    parser.add_argument('-am','--amijo',nargs='?',help='wether to use amijo linesearch',type=utils.str2bool,default=False)
+    parser.add_argument('-am','--amijo',nargs='?',help='wether to use amijo linesearch',type=utils.str2bool,default=True)
     parser.add_argument('-a','--alpha', nargs='+',type=float, help='Alphas to cross validate. Ignored if cva is true',default=-8000)
     parser.add_argument('-cva','--automatic_cv_alpha',nargs='?',help='wether to use a predifined CV grid for alpha. 15 alphas are tested',type=utils.str2bool,default=False)
 
