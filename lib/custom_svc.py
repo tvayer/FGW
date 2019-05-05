@@ -12,8 +12,28 @@ class InfiniteException(Exception):
 class NanErrorInDist(Exception):
     pass
 
+"""
+The following classes are used to create a SVM classifier over the FGW distance using the indefinite kernel e^{-\gamma*FGW}
+"""
 
 class GenericSVCClassifier(TransformerMixin):
+    """ GenericSVCClassifier is a sklearn compatible class. 
+    It computes a SVM classifier over a any type of data as long as a similarity measure is defined.
+    More precisely if f is a similarity measure it computes a SVM on a precomputed similarity matrix K=exp{-gamma*f(x,y)} for all x,y
+    
+    Attributes
+    ----------    
+    similarity_measure : a method
+               The similarity mesure between the points
+    gamma : float
+            The gamma parameter in the similarity matrix K=exp{-gamma*f(x,y)}
+    D : ndarray
+        The similarity matrix f(x,y)
+    svc : the SVM classifier from sklearn
+    C : float 
+        The C parameter of the SVM
+
+    """
     def __init__(self,similarity_measure,C=1,gamma=1,verbose=False,always_raise=False):
         self.similarity_measure = similarity_measure
         self.gamma=gamma

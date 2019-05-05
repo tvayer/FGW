@@ -1,9 +1,6 @@
-""" A Python Class
-A simple Python graph class, demonstrating the essential 
-facts and functionalities of graphs.
+# -*- coding: utf-8 -*-
 
-Compatible networkx VERSION 2
-"""
+
 import networkx as nx
 import matplotlib.pyplot as plt
 import itertools
@@ -16,17 +13,31 @@ import copy
 import matplotlib.colors as mcol
 from matplotlib import cm
 
-#%%
-
 class NoAttrMatrix(Exception):
     pass
 
 class NoPathException(Exception):
     pass
 
-#%%
-class Graph(object):
+"""
+Summarizes all the methods and classes related to graphs
+"""
 
+#%%
+class Graph():
+    """ Graph is a class that model all the graphs used in the experiments.
+    
+    Attributes
+    ----------    
+    nx_graph : a networkx graph, optionnal
+               The networkx graph
+    C : ndarray
+        The structure matrix of the graph. Initalize at None
+    name_struct_dist : string
+                       The name of the method used to compute the structure matrix
+    name : string, 
+           Name of the graph because life without name has no meaning. 
+    """
     def __init__(self,nx_graph=None):
         if nx_graph is not None:
             self.nx_graph=nx.Graph(nx_graph)
@@ -42,7 +53,6 @@ class Graph(object):
 
 
     def __eq__(self, other) : 
-        #print('yo method')
         return self.nx_graph == other.nx_graph
 
     def __hash__(self):
@@ -72,6 +82,7 @@ class Graph(object):
             self.nx_graph.add_node(vertex)
 
     def values(self):
+        """ returns a list of all the features of the graph"""
         return [v for (k,v) in nx.get_node_attributes(self.nx_graph,'attr_name').items()]
 
     def add_nodes(self, nodes):
@@ -81,7 +92,6 @@ class Graph(object):
         """ assumes that edge is of type set, tuple or list; 
             between two vertices can be multiple edges! 
         """
-        #edge = set(edge)
         (vertex1, vertex2) = tuple(edge)
         self.nx_graph.add_edge(vertex1,vertex2)
 
@@ -95,76 +105,36 @@ class Graph(object):
 
     def get_attr(self,vertex):
         return self.nx_graph.node[vertex]
-
-    def add_uniform_to_leaves(self,leaves,a,b):
-        d=dict((leaf,np.random.uniform(a,b)) for leaf in leaves)
-        self.add_attibutes(d)
-
-    def create_uniform_leaves(self,names,a,b):
-        self.add_nodes(names)
-        self.add_uniform_to_leaves(names,a,b)
-
-    def create_classes_uniform_leaves(self,nLeaves,classes):
-        names=[0]
-        classe,a,b=classes      
-        names=[classe+str(i+names[::-1][0]) for i in range(nLeaves)] #pour que les noms soient distincts
-        self.create_uniform_leaves(names,a,b)
-
-    def find_leaf(self,beginwith): #assez nulle comme recherche
-        nodes=self.nodes()
-        returnlist=list()
-        for nodename in nodes :
-            if str(nodename).startswith(beginwith):
-                returnlist.append(nodename)
-        return returnlist
     
-    def smallest_path(self,start_vertex, end_vertex):
-        try:
-            pathtime=time.time()
-            shtpath=nx.shortest_path(self.nx_graph,start_vertex,end_vertex)
-            endpathtime=time.time()
-            self.log['pathtime'].append(endpathtime-pathtime)
-            return shtpath
-        except nx.exception.NetworkXNoPath:
-            raise NoPathException('No path between two nodes, graph name : ',self.name)
-
     def reshaper(self,x):
         try:
             a=x.shape[1]
             return x
         except IndexError:
             return x.reshape(-1,1)
-      
-    def attribute_distance(self,node1,node2):
 
-        attr1=self.nx_graph.node[node1]
-        attr2=self.nx_graph.node[node2]
-
-        if 'attr_name' in attr1 and 'attr_name' in attr2:
-
-            x1=self.reshaper(np.array(attr1['attr_name']))
-            x2=self.reshaper(np.array(attr2['attr_name']))
-            d=float(np.linalg.norm(x1-x2)) #PAR DEFAUT C'est la distance euclidienne entre les features 
-        return d
-
-    def all_attribute_distance(self,nodeOfInterest=None): #un peu beaucoup vener
-
-        if nodeOfInterest==None :
-            v=self.nx_graph.nodes()
-        else:
-            v=nodeOfInterest
-        pairs = list(itertools.combinations(v,2))
-        dist_dic=dict()
-
-        for node1,node2 in pairs:
- 
-            dist_dic[(node1,node2)]=self.attribute_distance(node1,node2)
-
-        self.dist_dic=dist_dic
-        self.max_attr_distance=max(list(dist_dic.values()))
-
-
-    def distance_matrix(self,nodeOfInterest=None,method='shortest_path',changeInf=True,maxvaluemulti=10,force_recompute=False,algo='scipy'): # Ca ne va pas 
+    def distance_matrix(self,method='shortest_path',changeInf=True,maxvaluemulti=10,force_recompute=False): 
+        """ Compute the structure matrix of the graph. 
+        It aims at comparing nodes between them using a notion of similarity defined by the "method" parameter
+        
+        Parameters
+        ----------
+        method : string, default shortest_path. choices : shortest_path, square_shortest_path, weighted_shortest_path, adjency, harmonic_distance
+               The method used to compute the structure matrix of the graph :
+                   - shortest_path : compute all the shortest_path between the nodes
+                   - square_shortest_path : same but squared 
+                   - weighted_shortest_path : compute the shortest path of the weighted graph with weights the distances between the features of the nodes
+                   - adjency : compute the adjency matrix of the graph
+                   - harmonic_distance : harmonic distance between the nodes
+        changeInf : bool
+                    If true when the graph has disconnected parts it replaces inf distances by a maxvaluemulti times the largest value of the structure matrix
+        force_recompute : force to recompute de distance matrix. If False the matrix is computed only if not already compute or if the method used for computing it changes       
+        Returns
+        -------
+        C : ndarray, shape (n_nodes,n_nodes)
+            The structure matrix of the graph
+        Set also the attribute C of the graph if C does not exist or if force_recompute is True 
+        """
         start=time.time()
         if (self.C is None) or force_recompute:
 
@@ -182,32 +152,25 @@ class Graph(object):
                 C=np.outer(np.diag(fL),ones_vector)+np.outer(ones_vector,np.diag(fL))-2*fL
                 C=np.array(C)
                 
-                if nodeOfInterest is not None :
-                    C=C[np.ix_(nodeOfInterest,nodeOfInterest)]
-
-            if method=='shortest_path':
-                
-                C=shortest_path(A)
-                if nodeOfInterest is not None :
-                    C=C[np.ix_(nodeOfInterest,nodeOfInterest)] 
+            if method=='shortest_path':                
+                C=shortest_path(A) 
              
             if method=='square_shortest_path':
                 C=shortest_path(A)
-                if nodeOfInterest is not None :
-                    C=C[np.ix_(nodeOfInterest,nodeOfInterest)]
                 C=C**2
+                
             if method=='adjency':
                 return A.toarray()
+                
             if method=='weighted_shortest_path':
-                if nodeOfInterest is not None :
-                    d=self.reshaper(np.array([v for (k,v) in nx.get_node_attributes(self.nx_graph,'attr_name').items() if k in nodeOfInterest]))
-                else :
-                    d=self.reshaper(np.array([v for (k,v) in nx.get_node_attributes(self.nx_graph,'attr_name').items()]))
+                d=self.reshaper(np.array([v for (k,v) in nx.get_node_attributes(self.nx_graph,'attr_name').items()]))
                 D= ot.dist(d,d)
                 D_sparse=sparse.csr_matrix(D)
                 C=shortest_path(A.multiply(D_sparse))
+                
             if changeInf==True:
                 C[C==float('inf')]=maxvaluemulti*np.max(C[C!=float('inf')]) # à voir
+                
             self.C=C
             self.name_struct_dist=method
             end=time.time()
@@ -240,22 +203,49 @@ class Graph(object):
 #%%
 
 def find_thresh(C,inf=0.5,sup=3,step=10):
+    """ Trick to find the adequate thresholds from where value of the C matrix are considered close enough to say that nodes are connected
+        Tthe threshold is found by a linesearch between values "inf" and "sup" with "step" thresholds tested. 
+        The optimal threshold is the one which minimizes the reconstruction error between the shortest_path matrix coming from the thresholded adjency matrix 
+        and the original matrix.
+    Parameters
+    ----------
+    C : ndarray, shape (n_nodes,n_nodes)
+            The structure matrix to threshold
+    inf : float
+          The beginning of the linesearch
+    sup : float
+          The end of the linesearch
+    step : integer 
+            Number of thresholds tested        
+    """
     dist=[]
     search=np.linspace(inf,sup,step)
     for thresh in search:
         Cprime=sp_to_adjency(C,0,thresh)
-        #print(Cprime)
         SC=shortest_path(Cprime,method='D')
         SC[SC==float('inf')]=100
-        #print(SC)
         dist.append(np.linalg.norm(SC-C))
     return search[np.argmin(dist)],dist
 
 def sp_to_adjency(C,threshinf=0.2,threshsup=1.8):
+    """ Thresholds the structure matrix in order to compute an adjency matrix. 
+    All values between threshinf and threshsup are considered representing connected nodes and set to 1. Else are set to 0    
+    Parameters
+    ----------
+    C : ndarray, shape (n_nodes,n_nodes)
+        The structure matrix to threshold
+    threshinf : float
+        The minimum value of distance from which the new value is set to 1
+    threshsup : float
+        The maximum value of distance from which the new value is set to 1
+    Returns
+    -------
+    C : ndarray, shape (n_nodes,n_nodes)
+        The threshold matrix. Each element is in {0,1}
+    """
     H=np.zeros_like(C)
     np.fill_diagonal(H,np.diagonal(C))
     C=C-H
-    #C=stats.threshold(C, threshmin=threshinf, threshmax=threshsup, newval=0)
     C=np.minimum(np.maximum(C,threshinf),threshsup)
     C[C==threshsup]=0
     C[C!=0]=1   
@@ -354,7 +344,7 @@ def draw_rel(G,draw=True,shiftx=0,shifty=0,return_pos=False,with_labels=True,swi
     
     if shiftx!=0 or shifty!=0:
         for k,v in pos.items():
-            # Shift the x values of every node by 10 to the right
+            # Shift the x values of every node by shiftx,shifty
             if shiftx!=0:
                 v[0] = v[0] +shiftx
             if shifty!=0:

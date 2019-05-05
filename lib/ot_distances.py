@@ -5,12 +5,23 @@ import time
 from graph import NoAttrMatrix
 from utils import hamming_dist
 
-# A factoriser en utilisant une seule méthode à la place de tree_d etc : juste créer un objet qui a distance_matrix!!!!!
-# TODO : add stab to all methods
+"""
+The following classes adapt the OT distances to Graph objects
+"""
+
 class BadParameters(Exception):
     pass
 
 class Wasserstein_distance():
+    """ Wasserstein_distance is a class used to compute the Wasserstein distance between features of the graphs.
+    
+    Attributes
+    ----------    
+    features_metric : string
+                      The name of the method used to compute the cost matrix between the features
+    transp : ndarray, shape (ns,nt) 
+           The transport matrix between the source distribution and the target distribution 
+    """
     def __init__(self,features_metric='sqeuclidean'): #remplacer method par distance_method  
         self.features_metric=features_metric
         self.transp=None
@@ -24,6 +35,15 @@ class Wasserstein_distance():
             return x.reshape(-1,1)
 
     def graph_d(self,graph1,graph2):
+        """ Compute the Wasserstein distance between two graphs. Uniform weights are used.        
+        Parameters
+        ----------
+        graph1 : a Graph object
+        graph2 : a Graph object
+        Returns
+        -------
+        The Wasserstein distance between the features of graph1 and graph2
+        """
 
         nodes1=graph1.nodes()
         nodes2=graph2.nodes()
@@ -52,7 +72,29 @@ class Wasserstein_distance():
 
 
 class Fused_Gromov_Wasserstein_distance():
-
+    """ Fused_Gromov_Wasserstein_distance is a class used to compute the Fused Gromov-Wasserstein distance between graphs 
+    as presented in [3]
+    
+    Attributes
+    ----------    
+    method : string
+             The name of the method used to compute the structures matrices of the graphs. See Graph class
+    max_iter : integer
+               Number of iteration of the FW algorithm for the computation of FGW.
+    features_metric : string
+                      The name of the method used to compute the cost matrix between the features
+                      For hamming_dist see experimental setup in [3]
+    transp : ndarray, shape (ns,nt) 
+           The transport matrix between the source distribution and the target distribution
+    amijo : bool, optionnal
+            If True the steps of the line-search is found via an amijo research. Else closed form is used.        
+    References
+    ----------
+    .. [3] Vayer Titouan, Chapel Laetitia, Flamary R{\'e}mi, Tavenard Romain
+          and Courty Nicolas
+        "Optimal Transport for structured data with application on graphs"
+        International Conference on Machine Learning (ICML). 2019.
+    """
 
     def __init__(self,alpha=0.5,method='shortest_path',features_metric='sqeuclidean',max_iter=500,verbose=False,amijo=False): #remplacer method par distance_method  
         self.method=method
@@ -78,14 +120,21 @@ class Fused_Gromov_Wasserstein_distance():
         return transpwgw,log
         
     def graph_d(self,graph1,graph2):
-
-        #print('fused')
+        """ Compute the Fused Gromov-Wasserstein distance between two graphs. Uniform weights are used.        
+        Parameters
+        ----------
+        graph1 : a Graph object
+        graph2 : a Graph object
+        Returns
+        -------
+        The Fused Gromov-Wasserstein distance between the features of graph1 and graph2
+        """
         gofeature=True
         nodes1=graph1.nodes()
         nodes2=graph2.nodes()
         startstruct=time.time()
-        C1=graph1.distance_matrix(method=self.method,algo='scipy')
-        C2=graph2.distance_matrix(method=self.method,algo='scipy')
+        C1=graph1.distance_matrix(method=self.method)
+        C2=graph2.distance_matrix(method=self.method)
         end2=time.time()
         t1masses = np.ones(len(nodes1))/len(nodes1)
         t2masses = np.ones(len(nodes2))/len(nodes2)
@@ -100,7 +149,7 @@ class Fused_Gromov_Wasserstein_distance():
             if self.features_metric=='dirac':
                 f=lambda x,y: x!=y
                 M=ot.dist(x1,x2,metric=f)
-            elif self.features_metric=='hamming_dist':
+            elif self.features_metric=='hamming_dist': #see experimental setup in the original paper
                 f=lambda x,y: hamming_dist(x,y)
                 M=ot.dist(x1,x2,metric=f)
             else:
@@ -121,9 +170,7 @@ class Fused_Gromov_Wasserstein_distance():
 
         return log['loss'][::-1][0]
 
-
-    
-
     def get_tuning_params(self):
+        """Parameters that defined the FGW distance """
         return {"method":self.method,"max_iter":self.max_iter,"alpha":self.alpha,
         "features_metric":self.features_metric,"amijo":self.amijo}

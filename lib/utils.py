@@ -25,6 +25,7 @@ def create_log_dir(FLAGS):
     return log_dir
 
 def unique_repr(dictio,type_='normal'):
+    """Compute a hashable unique representation of a list of dict with unashable values"""
     if 'normal':
         t = tuple((k, dictio[k]) for k in sorted(dictio.keys()))
     if 'not_normal':

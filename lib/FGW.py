@@ -1,6 +1,3 @@
-#!/usr/bin/env python2
-# -*- coding: utf-8 -*-
-
 import numpy as np
 import ot
 import optim
@@ -152,7 +149,7 @@ def gwggrad(constC,hC1,hC2,T):
            Gromov Wasserstein gradient
     References
     ----------
-    .. [12] Peyré, Gabriel, Marco Cuturi, and Justin Solomon,
+    .. [1] Peyré, Gabriel, Marco Cuturi, and Justin Solomon,
     "Gromov-Wasserstein averaging of kernel and distance matrices."
     International Conference on Machine Learning (ICML). 2016.
     """
@@ -262,7 +259,7 @@ def fgw_lp(M,C1,C2,p,q,loss_fun='square_loss',alpha=1,amijo=False,G0=None,**kwar
     log : bool, optional
         record log if True
     amijo : bool, optional
-        If True the step of the line-search is found via an amijo research. Else closed form is used.
+        If True the steps of the line-search is found via an amijo research. Else closed form is used.
     **kwargs : dict
         parameters can be directly pased to the ot.optim.cg solver
     Returns
@@ -513,11 +510,6 @@ def fgw_barycenters(N,Ys,Cs,ps,lambdas,alpha,fixed_structure=False,fixed_feature
         log_['Ts_iter'].append(T)
         err_feature = np.linalg.norm(X - Xprev.reshape(d,N))
         err_structure = np.linalg.norm(C - Cprev)
-
-        if one_hot_maj:
-            b = np.zeros_like(X)
-            b[np.arange(len(X)), X.argmax(1)] = 1
-            X=b
 
         if log:
             log_['err_feature'].append(err_feature)

@@ -1,12 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
 """
-Created on Thu Oct 18 17:11:26 2018
-Nested CV FGW
-@author: vayer
+Compute the nested Cross Validation used in the paper for fgw.
 """
 
-#%%
 from sklearn.model_selection import StratifiedKFold
 import itertools
 import os
@@ -49,7 +47,32 @@ def filter_all_params(allparams,filtre_key):
 
     
 def nested_fgw(X,y,tuned_parameters,dataset_name,logging,path=None,n_inner=10,n_iter=10,verbose=1,optionnal=""):
-    
+
+    """ Compute the nested cross-validation         
+        Parameters
+        ----------
+        X : array of Graph objects
+        y : array of classes of each graph
+        tuned_parameters : a list of dict 
+                           Parameters to cross validate. Identical ass sklearn for GridSearch
+        dataset_name : string 
+                       name of the dataset. Used only to check the right dataset in the precalculated disances folder
+        logging : a logging object
+                  Used to write the log. Can be instantiate via utils.setup_logger
+        path : string
+               Path to the precalculated FGW distances. If not specified all distances are recalculated. 
+               If specified it checks amoung all precalculated distances the ones that correspond to the cross-validated parameters
+        n_inner : integer
+                  The number of inner folds in the nested cross validation
+        n_iter : integer
+                 The number of outer folds in the nested cross validation
+        optionnal : string
+                    A optionnal name to add to the name of the log file
+        Returns
+        -------
+        Writes the results in the log file
+    """
+
     logging.info('############ Begin nested CV ############')
     logging.info('Inner : '+str(n_inner))
     logging.info('Outer : '+str(n_iter))
@@ -66,7 +89,7 @@ def nested_fgw(X,y,tuned_parameters,dataset_name,logging,path=None,n_inner=10,n_
     
     logging.info('Begin precomputing all distances matrices')
     logging.info(str(len(all_params_filtered))+' matrices to fit...')
-    
+    # Get the distances of calculates them
     dict_of_all_distances={}
     l=0
     for params in all_params_filtered:
@@ -84,12 +107,12 @@ def nested_fgw(X,y,tuned_parameters,dataset_name,logging,path=None,n_inner=10,n_
             if name+'.pkl' in os.listdir(path):
                 if verbose>1:
                     print('Load dict')
-                d=utils.load_obj(name+'.pkl',path=path)
+                d=utils.load_obj(name+'.pkl',path=path) #load the distances of the given dataset
             else:
                 if verbose>1:
                     print('Create empty dict')
                 d={}
-            if unique_repr(clf.get_distances_params()) in d:
+            if unique_repr(clf.get_distances_params()) in d: #if cv param are there we get the distance
                 D=d[unique_repr(clf.get_distances_params())]
                 dict_of_all_distances[unique_repr(clf.get_distances_params())]=D/np.max(D)
             else:
@@ -105,7 +128,7 @@ def nested_fgw(X,y,tuned_parameters,dataset_name,logging,path=None,n_inner=10,n_
             print('Done params : ',l)
     logging.info('...Done')
             
-    for i in range(n_iter):
+    for i in range(n_iter): # do the nested CV
         k_fold=StratifiedKFold(n_splits=n_inner,random_state=i)
         G_train,y_train,idx_train,G_test,y_test,idx_test=split_train_test(list(zip(X, list(y))),ratio=0.9, seed=i)        
 
@@ -114,7 +137,6 @@ def nested_fgw(X,y,tuned_parameters,dataset_name,logging,path=None,n_inner=10,n_
         for param in allparams:
             acc_inner_dict[repr(param)]=[]    
             
-        # fait un découpage de 9/10 du train 
         for idx_subtrain, idx_valid in k_fold.split(G_train,y_train):
             true_idx_subtrain=[idx_train[i] for i in idx_subtrain]
             true_idx_valid=[idx_train[i] for i in idx_valid]
@@ -124,18 +146,13 @@ def nested_fgw(X,y,tuned_parameters,dataset_name,logging,path=None,n_inner=10,n_
             x_valid=np.array([X[i] for i in true_idx_valid])
             y_valid=np.array([y[i] for i in true_idx_valid])
                       
-            # pour chaque parametre fit et test sur un subtrain subtest et inscrit le score    
+            # For all parameter fit on subrain and test on subtest    
             for param in allparams:
                 # Initialise an SVM and fit.
                 clf = Graph_FGW_SVC_Classifier()
                 clf.set_params(**param)
                                 
                 # Fit on the train Kernel
-
-                if 'krein' in param: # le krein n'accepte que des classes -1/1
-                    if param['krein']:
-                        y_subtrain[y_subtrain==0]=-1
-                        y_valid[y_valid==0]=-1
                                         
                 if unique_repr(clf.get_distances_params()) in dict_of_all_distances:
                     
@@ -166,7 +183,7 @@ def nested_fgw(X,y,tuned_parameters,dataset_name,logging,path=None,n_inner=10,n_
         
         logging.info('############ One inner CV Done ############')
               
-        # Trouve les meilleurs params sur le inner CV
+        # Fin best params in the inner
         for key,value in acc_inner_dict.items():
             best_inner_dict[key]=np.mean(acc_inner_dict[key])
                 
@@ -174,17 +191,11 @@ def nested_fgw(X,y,tuned_parameters,dataset_name,logging,path=None,n_inner=10,n_
         logging.info('Best params : '+str(repr(param_best)))
         logging.info('Best inner score : '+str(max(list(best_inner_dict.values()))))
 
-
         clf = Graph_FGW_SVC_Classifier()
         clf.set_params(**param_best)  
         
         D=dict_of_all_distances[unique_repr(clf.get_distances_params())]
-        
-        if 'krein' in param_best: # le krein n'accepte que des classes -1/1
-            if param_best['krein']:
-                y_train[y_train==0]=-1
-                y_test[y_test==0]=-1
-            
+                    
         clf.fit(G_train, y_train,matrix=D[np.ix_(idx_train,idx_train)])
         
         y_pred = clf.predict(G_test,matrix=D[np.ix_(idx_test,idx_train)])
@@ -210,13 +221,13 @@ if __name__ == '__main__':
     parser.add_argument('-dist','--distances_path', nargs='?',help='the path to the precalculated distances for fgw ')
     parser.add_argument('-o','--optionnal_name', nargs='?',default="",help='optionnal name to add for the log file')
     parser.add_argument('-r','--log_dir', nargs='?',default="", type=str,help='the path to the directory where to write to')
-    parser.add_argument('-wl','--wl_feature',nargs='?',type=int,help='if we use weisfeler lehman features',default=0)
+    parser.add_argument('-wl','--wl_feature',nargs='?',type=int,help='Use the Weisfeler Lehman features if wl>0 ',default=0)
     parser.add_argument('-at','--attributes',nargs='?',help='wether to use vector attributes of the graph',type=utils.str2bool,default=True)
     parser.add_argument('-fea','--feature_metric',type=str,choices=['euclidean','sqeuclidean','dirac','hamming_dist'],help='the metric to use for the features',required=True)
     parser.add_argument('-st','--structure_metric',type=str,choices=['shortest_path','weighted_shortest_path','harmonic_distance','adjency','square_shortest_path'],help='the metric to use for the structures',required=True)
     parser.add_argument('-C','--Csvm', nargs='?',default=-1, type=float,help='C parameter in Linear SVM. If not specified cross validated')
     parser.add_argument('-g','--gamma', nargs='?',default=-1, type=float,help='Gamma parameter in Gaussian SVM. If not specified cross validated')
-    parser.add_argument('-test','--test',nargs='?',help='wether test version',type=utils.str2bool,default=False)
+    parser.add_argument('-test','--test',nargs='?',help='wether to use a test version',type=utils.str2bool,default=False)
     parser.add_argument('-v','--verbose', nargs='?', default=1, type=int,help='verbose')
     parser.add_argument('-am','--amijo',nargs='?',help='wether to use amijo linesearch',type=utils.str2bool,default=False)
     parser.add_argument('-a','--alpha', nargs='+',type=float, help='Alphas to cross validate. Ignored if cva is true',default=-8000)
