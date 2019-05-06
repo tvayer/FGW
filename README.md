@@ -58,6 +58,7 @@ python3 nested_cv_fgw.py -dn mutag -d ../data -r ../results -ni 10 -no 50  -fea 
 
 * k-means of multiple graphs
 * Integration in the POT library [1] of FGW 
+* Add other methods for graph kernels
 
 ### Authors
 
