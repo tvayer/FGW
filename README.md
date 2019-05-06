@@ -28,7 +28,9 @@ All the data used in the paper came from the Benchmark Data Sets for Graph Kerne
 
 * Comparing labeled graphs using FGW
 
-![Alt text](coupling_on_graphs.png){:height="50%" width="50%"}
+<p align="center">
+  <img src="https://github.com/tvayer/FGW/blob/master/coupling_on_graphs.png" width="256" >
+</p>
 
 * Methods for graphs barycenter using FGW 
 
