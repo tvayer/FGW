@@ -15,7 +15,6 @@ Feel free to ask if any question
 If you use this toolbox in your research and find it useful, please cite FGW using the following bibtex reference:
 
 ```
-
 @ARTICLE{vay2018fgw,
        author = {{Vayer}, Titouan and {Chapel}, Laetitia and {Flamary}, R{\'e}mi and
          {Tavenard}, Romain and {Courty}, Nicolas},
