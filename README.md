@@ -3,7 +3,13 @@
 Python3 implementation of the paper [Optimal Transport for structured data with application on graphs
 ](https://arxiv.org/abs/1805.09114) 
 
-In the paper we used this implementation of Patchy-San convolutional network [PSCN](https://github.com/tvayer/PSCN)
+FGW is a distance between labeled graphs based on Optimal Transport. It is applicable between graphs with different number of nodes and with any type of label/feature on the nodes. 
+
+It computes a soft assignment of the nodes wrt their features and the graphs' structures. It can be used for visualisation, classification and barycenter of multiple graphs.
+
+In the paper we also used this implementation of the Patchy-San Convolutional Network framework [PSCN](https://github.com/tvayer/PSCN)
+
+Feel free to ask if any questions
 
 ### Prerequisites
 
@@ -22,32 +28,30 @@ All the data used in the paper came from the Benchmark Data Sets for Graph Kerne
 
 ### What is included ?
 
-* FGW for euclidean measures 
+* FGW for euclidean measures:
 
 ![Alt text](coupling_on_1D.png)
 
-* Comparing labeled graphs using FGW
+* Comparing labeled graphs using FGW:
 
 <p align="center">
   <img src="https://github.com/tvayer/FGW/blob/master/coupling_on_graphs.png" width="340" >
 </p>
 
-* Methods for graphs barycenter using FGW 
+* Methods for graphs barycenter using FGW:
 
 ![Alt text](barycircle.png)
 
-* Nested cross validation used for benchmark data sets used in the paper :
+* Nested cross validation used in the paper (for e.g):
 
 ```
 python3 nested_cv_fgw.py -dn mutag -d ../data -r ../results -ni 10 -no 50  -fea hamming_dist -st shortest_path -cva True -wl 2 
-
 ```
-
 
 ### What will be added ?
 
 * k-means of multiple graphs
-* The Integration in the POT library [1] of FGW 
+* Integration in the POT library [1] of FGW 
 
 ### Authors
 

@@ -1,14 +1,5 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Created on Tue Aug 21 10:19:01 2018
 
-Tests pour Grakel
-
-@author: vayer
-"""
-
-#%%
 from grakel import datasets
 from sklearn.metrics import accuracy_score
 import numpy as np

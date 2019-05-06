@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from sklearn.svm import SVC
 import numpy as np
 from sklearn.base import TransformerMixin

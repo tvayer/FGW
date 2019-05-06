@@ -1,8 +1,5 @@
-"""
-Created on Tue Oct 23 14:54:17 2018
-Load data
-@author: Titouan
-"""
+# -*- coding: utf-8 -*-
+
 from graph import Graph,wl_labeling
 import networkx as nx
 from utils import per_section,indices_to_one_hot
@@ -12,7 +9,41 @@ import math
 class NotImplementedError(Exception):
     pass
 
+"""
+All methods for loading the data
+"""
+
 def load_local_data(data_path,name,one_hot=False,attributes=True,use_node_deg=False,wl=0):
+    """ Load local datasets    
+    Parameters
+    ----------
+    data_path : string
+                Path to the data. Must link to a folder where all datasets are saved in separate folders
+    name : string
+           Name of the dataset to load. 
+           Choices=['mutag','ptc','nci1','imdb-b','imdb-m','enzymes','protein','protein_notfull','bzr','cox2','synthetic','aids','cuneiform'] 
+    one_hot : integer
+              If discrete attributes must be one hotted it must be the number of unique values.
+    attributes :  bool, optional
+                  For dataset with both continuous and discrete attributes. 
+                  If True it uses the continuous attributes (corresponding to "Node Attr." in [5])
+    use_node_deg : bool, optional
+                   Wether to use the node degree instead of original labels. 
+    wl : integer, optional
+         For dataset with discrete attributes.
+         Relabels the graph with a Weisfeler-Lehman procedure. wl is the number of iteration of the procedure
+         See wl_labeling in graph.py
+    Returns
+    -------
+    X : array
+        array of Graph objects created from the dataset
+    y : array
+        classes of each graph    
+    References
+    ----------    
+    [5] Kristian Kersting and Nils M. Kriege and Christopher Morris and Petra Mutzel and Marion Neumann 
+        "Benchmark Data Sets for Graph Kernels"
+    """
     if name=='mutag':
         path=data_path+'/MUTAG_2/'
         dataset=build_MUTAG_dataset(path,one_hot=one_hot)
@@ -199,7 +230,7 @@ def all_connected(X):
         a.append(nx.is_connected(graph.nx_graph))
     return np.all(a)
 
-#%% TO FACTORIZE !!!
+#%% TO FACTORIZE !!!!!!!!!!!
 def build_NCI1_dataset(path):
     node_dic=node_labels_dic(path,'NCI1_node_labels.txt')
     node_dic2={}

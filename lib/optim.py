@@ -3,9 +3,6 @@
 Optimization algorithms for OT
 """
 
-# Author: Remi Flamary <remi.flamary@unice.fr>
-#
-# License: MIT License
 
 import numpy as np
 from scipy.optimize.linesearch import scalar_search_armijo
@@ -15,54 +12,17 @@ from ot.lp import emd
 class StopError(Exception):
     pass
 
-def init_matrix(C1,C2,p,q,loss_fun='square_loss'):
-
-    if loss_fun == 'square_loss':
-        def f1(a):
-            return (a**2) / 2
-
-        def f2(b):
-            return (b**2) / 2
-
-        def h1(a):
-            return a
-
-        def h2(b):
-            return b
-
-    constC1 = np.dot(np.dot(f1(C1), p.reshape(-1, 1)),
-                     np.ones(len(q)).reshape(1, -1))
-    constC2 = np.dot(np.ones(len(p)).reshape(-1, 1),
-                     np.dot(q.reshape(1, -1), f2(C2).T))
-    constC=constC1+constC2
-    hC1 = h1(C1)
-    hC2 = h2(C2)
-
-    return constC,hC1,hC2
-
-def tensor_product(constC,hC1,hC2,T):
-    A=-np.dot(hC1, T).dot(hC2.T)
-    tens = constC+A
-
-    return tens
-    
-# The corresponding scipy function does not work for matrices
 
 class NonConvergenceError(Exception):
-    pass
-class NonSymetricCostError(Exception):
     pass
 class StopError(Exception):
     pass
         
 def solve_1d_linesearch_quad_funct(a,b,c):
-    # min f(x)=a*x**2+b*x+c sur 0,1
+    # solve min f(x)=a*x**2+b*x+c sur 0,1
     f0=c
     df0=b
     f1=a+f0+df0
-    #print(a,b,c)
-    #print(a+b+c)
-    #f=lambda x: a*x**2+b*x+c
 
     if a>0: # convex
         minimum=min(1,max(0,-b/(2*a)))
@@ -131,6 +91,49 @@ def do_linesearch(cost,G,deltaG,Mi,f_val,amijo=True,C1=None,C2=None,reg=None,Gc=
     #G=xt
     #deltaG=st-xt
     #Gc+alpha*deltaG=st+alpha(st-xt)
+    """
+    Solve the linesearch in the FW iterations
+    Parameters
+    ----------
+    cost : method
+        The FGW cost
+    G : ndarray, shape(ns,nt)
+        The transport map at a given iteration of the FW
+    deltaG : ndarray (ns,nt)
+        Difference between the optimal map found by linearization in the FW algorithm and the value at a given iteration
+    Mi : ndarray (ns,nt)
+        Cost matrix of the linearized transport problem. Corresponds to the gradient of the cost
+    f_val :  float
+        Value of the cost at G
+    amijo : bool, optionnal
+            If True the steps of the line-search is found via an amijo research. Else closed form is used.
+            If there is convergence issues use False.
+    C1 : ndarray (ns,ns), optionnal
+        Structure matrix in the source domain. Only used when amijo=False
+    C2 : ndarray (nt,nt), optionnal
+        Structure matrix in the target domain. Only used when amijo=False
+    reg : float, optionnal
+          Regularization parameter. Corresponds to the alpha parameter of FGW. Only used when amijo=False
+    Gc : ndarray (ns,nt)
+        Optimal map found by linearization in the FW algorithm. Only used when amijo=False
+    constC : ndarray (ns,nt)
+             Constant for the gromov cost. See [3]. Only used when amijo=False
+    M : ndarray (ns,nt), optionnal
+        Cost matrix between the features. Only used when amijo=False
+    Returns
+    -------
+    alpha : float
+            The optimal step size of the FW
+    fc : useless here
+    f_val :  float
+             The value of the cost for the next iteration
+    References
+    ----------
+    .. [3] Vayer Titouan, Chapel Laetitia, Flamary R{\'e}mi, Tavenard Romain
+          and Courty Nicolas
+        "Optimal Transport for structured data with application on graphs"
+        International Conference on Machine Learning (ICML). 2019.
+    """
     if amijo:
         alpha, fc, f_val = line_search_armijo(cost, G, deltaG, Mi, f_val)
     else:
@@ -140,29 +143,9 @@ def do_linesearch(cost,G,deltaG,Mi,f_val,amijo=True,C1=None,C2=None,reg=None,Gc=
         b=np.sum((M+reg*constC)*deltaG)-2*reg*(np.sum(dot12*G)+np.sum(np.dot(C1,G).dot(C2)*deltaG)) 
         c=cost(G) #f(xt)
 
-        #alpha, fc, f_val =solve_1d_linesearch_quad_funct(a,b,c)
         alpha=solve_1d_linesearch_quad_funct(a,b,c)
         fc=None
         f_val=cost(G+alpha*deltaG)
-        #print('--------------------------------------------------')
-        #print('alpha',alpha)
-        #print('f_val',f_val)
-        #print('np.all(M)>=0',np.all(M)>=0)
-        #print('np.all(G+alpha*deltaG)>=0',np.all(G+alpha*deltaG>=0)) #ca c'est neg pourtant c'est Gc+Gc-G
-        #print('np.sum(M*(G+alpha*deltaG))',np.sum(M*(G+alpha*deltaG)))
-        #print('GWloss G+alpha*deltaG',f(G+alpha*deltaG))
-       # print('p',p)
-        #print('q',q)
-        #_,hC1,hC2=init_matrix(C1,C2,p,q)
-        #tens=tensor_product(constC,hC1,hC2,G+alpha*deltaG)
-        #print('tens>=0',np.all(tens)>=0)
-        #print('tens<0',tens[tens<=0])
-        #print('constCprime<0',constCprime[constCprime<0])
-        #print('A<0',A[A<0])
-
-        #print('np.sum(tens*(G+alpha*deltaG))',np.sum(tens*(G+alpha*deltaG)))
-        #print('--------------------------------------------------')
-        #raise StopError('stop mate')
         
     return alpha,fc,f_val
 
