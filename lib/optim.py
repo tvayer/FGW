@@ -62,7 +62,6 @@ def solve_1d_linesearch_quad_funct(a,b,c):
     f1=a+f0+df0
     #print(a,b,c)
     #print(a+b+c)
-
     #f=lambda x: a*x**2+b*x+c
 
     if a>0: # convex
@@ -137,7 +136,7 @@ def do_linesearch(cost,G,deltaG,Mi,f_val,amijo=True,C1=None,C2=None,reg=None,Gc=
     else:
         dot1=np.dot(C1,deltaG) 
         dot12=dot1.dot(C2) # C1 dt C2
-        a=-2*reg*np.sum(dot12*deltaG) #-2*alpha*<C1 dt C2,dt>
+        a=-2*reg*np.sum(dot12*deltaG) #-2*alpha*<C1 dt C2,dt> si qqlun est pas bon c'est lui
         b=np.sum((M+reg*constC)*deltaG)-2*reg*(np.sum(dot12*G)+np.sum(np.dot(C1,G).dot(C2)*deltaG)) 
         c=cost(G) #f(xt)
 
@@ -283,7 +282,7 @@ def cg(a, b, M, reg, f, df, G0=None, numItermax=500, stopThr=1e-09, verbose=Fals
             if it % 20 == 0:
                 print('{:5s}|{:12s}|{:8s}'.format(
                     'It.', 'Loss', 'Delta loss') + '\n' + '-' * 32)
-            print('{:5d}|{:8e}|{:8e}'.format(it, f_val, delta_fval))
+            print('{:5d}|{:8e}|{:8e}|{:5e}'.format(it, f_val, delta_fval,alpha))
 
     if log:
         return G, log

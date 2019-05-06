@@ -267,7 +267,27 @@ def relabel_graph_order(graph):
     return graph_relabel,inv_relabel_dict_
 
 def wl_labeling(graph,h=2,tohash=True):
+    """ Computes the Weisfeler-Lehman labeling for all nodes
+    Parameters
+    ----------
+    graph : Graph
+            The Graph to relabel
+    h : integer
+          The number of iteration of the Weisfeler-Lehman coloring. See [4]
+    tohash : bool, optionnal
+          Wether to hash the concatenated labeled
+    Returns
+    -------
+    graphs : Graph, 
+        The relabeled graph
 
+    References
+    ----------
+    .. [4] Nils M. Kriege and Pierre{-}Louis Giscard and Richard C. Wilson
+        "On Valid Optimal Assignment Kernels and Applications to Graph Classification"
+        Advances in Neural Information Processing Systems 29 (NIPS). 2016.
+
+    """
     niter=1
     final_graph=nx.Graph(graph)
 
