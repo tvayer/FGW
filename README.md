@@ -1,3 +1,4 @@
+
 # FGW
 
 Python3 implementation of the paper [Optimal Transport for structured data with application on graphs
@@ -10,6 +11,23 @@ It computes a soft assignment of the nodes wrt their features and the graphs' st
 In the paper we also used this implementation of the Patchy-San Convolutional Network framework [PSCN](https://github.com/tvayer/PSCN)
 
 Feel free to ask if any question
+
+If you use this toolbox in your research and find it useful, please cite FGW using the following bibtex reference:
+
+```
+
+@ARTICLE{vay2018fgw,
+       author = {{Vayer}, Titouan and {Chapel}, Laetitia and {Flamary}, R{\'e}mi and
+         {Tavenard}, Romain and {Courty}, Nicolas},
+        title = "{Optimal Transport for structured data with application on graphs}",
+      journal = {arXiv e-prints},
+     keywords = {Statistics - Machine Learning, Computer Science - Machine Learning},
+         year = "2018",
+archivePrefix = {arXiv},
+       eprint = {1805.09114},
+ primaryClass = {stat.ML},
+}
+```
 
 ### Prerequisites
 
