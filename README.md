@@ -66,10 +66,10 @@ python3 nested_cv_fgw.py -dn mutag -d ../data -r ../results -ni 10 -no 50  -fea 
 ```
 
 * Some demos are presented in the notebooks ("examples" folder):
-	- FGW_on_1D_measure.ipynb: illustrates the difference between Wasserstein/ Gromov-Wasserstein and Fused Gromov-Wasserstein distances on 1D measures
-	- graphs_barycenter.ipynb: simple computation of barycenter of multiple labeled graphs
-	- train_example.ipynb: simple classification on the Mutag dataset using FGW
-	- graphs_transport.ipynb: illustrates how use FGW between labeled graphs and to plot the soft assignment of their nodes
+	- [FGW_on_1D_measure.ipynb](/examples/FGW_on_1D_measure.ipynb): illustrates the difference between Wasserstein/ Gromov-Wasserstein and Fused Gromov-Wasserstein distances on 1D measures
+	- [graphs_barycenter.ipynb](/examples/graphs_barycenter.ipynb): simple computation of barycenter of multiple labeled graphs
+	- [train_example.ipynb](/examples/train_example.ipynb): simple classification on the Mutag dataset using FGW
+	- [graphs_transport.ipynb](/examples/graphs_transport.ipynb): illustrates how use FGW between labeled graphs and to plot the soft assignment of their nodes
 
 ### What will be added ?
 
