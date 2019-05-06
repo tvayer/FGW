@@ -28,9 +28,9 @@ All the data used in the paper came from the Benchmark Data Sets for Graph Kerne
 
 ### What is included ?
 
-* FGW between structured object with a cost M between features and structure matrices C1,C2:
+* FGW between structured objects with a cost M between features and structure matrices C1,C2:
 
-![Alt text](coupling_on_1D.png)
+![Alt text](coupling_on_1D.png "Optimal maps")
 
 * Comparing labeled graphs using FGW:
 
@@ -48,7 +48,7 @@ All the data used in the paper came from the Benchmark Data Sets for Graph Kerne
 python3 nested_cv_fgw.py -dn mutag -d ../data -r ../results -ni 10 -no 50  -fea hamming_dist -st shortest_path -cva True -wl 2 
 ```
 
-* Some demos are presented in the notebooks in the examples folder:
+* Some demos are presented in the notebooks ("examples" folder):
 	- FGW_on_1D_measure.ipynb: illustrates the difference between Wasserstein/ Gromov-Wasserstein and Fused Gromov-Wasserstein distances on 1D measures
 	- graphs_barycenter.ipynb: simple computation of barycenter of multiple labeled graphs
 	- train_example.ipynb: simple classification on the Mutag dataset using FGW
