@@ -24,7 +24,7 @@ All the data used in the paper came from the Benchmark Data Sets for Graph Kerne
 
 * Methods for graphs barycenter using FGW 
 
-![Alt text]('imgs/tobarycircle.png')
+![Alt text]('imgs/barycircle.png')
 
 ### What will be added ?
 
