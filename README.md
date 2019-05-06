@@ -3,13 +3,13 @@
 Python3 implementation of the paper [Optimal Transport for structured data with application on graphs
 ](https://arxiv.org/abs/1805.09114) 
 
-FGW is a distance between labeled graphs based on Optimal Transport. It is applicable between graphs with different number of nodes and with any type of label/feature on the nodes. 
+Fused Gromov-Wasserstein (FGW) is a distance between labeled graphs based on Optimal Transport. It is applicable between graphs with different number of nodes and with any type of label/feature on the nodes. 
 
 It computes a soft assignment of the nodes wrt their features and the graphs' structures. It can be used for visualisation, classification and barycenter of multiple graphs.
 
 In the paper we also used this implementation of the Patchy-San Convolutional Network framework [PSCN](https://github.com/tvayer/PSCN)
 
-Feel free to ask if any questions
+Feel free to ask if any question
 
 ### Prerequisites
 
@@ -28,7 +28,7 @@ All the data used in the paper came from the Benchmark Data Sets for Graph Kerne
 
 ### What is included ?
 
-* FGW for euclidean measures:
+* FGW between structured object with a cost M between features and structure matrices C1,C2:
 
 ![Alt text](coupling_on_1D.png)
 
@@ -47,6 +47,12 @@ All the data used in the paper came from the Benchmark Data Sets for Graph Kerne
 ```
 python3 nested_cv_fgw.py -dn mutag -d ../data -r ../results -ni 10 -no 50  -fea hamming_dist -st shortest_path -cva True -wl 2 
 ```
+
+* Some demos are presented in the notebooks in the examples folder:
+	- FGW_on_1D_measure.ipynb: illustrates the difference between Wasserstein/ Gromov-Wasserstein and Fused Gromov-Wasserstein distances on 1D measures
+	- graphs_barycenter.ipynb: simple computation of barycenter of multiple labeled graphs
+	- train_example.ipynb: simple classification on the Mutag dataset using FGW
+	- graphs_transport.ipynb: illustrates how use FGW between labeled graphs and to plot the soft assignment of their nodes
 
 ### What will be added ?
 
