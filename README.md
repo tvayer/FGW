@@ -20,11 +20,27 @@ In the paper we used this implementation of Patchy-San convolutional network [PS
 
 All the data used in the paper came from the Benchmark Data Sets for Graph Kernels [3]
 
-### What is included in FGW ?
+### What is included ?
+
+* FGW for euclidean measures 
+
+![Alt text](coupling_on_1D.png)
+
+* Comparing labeled graphs using FGW
+
+![Alt text](coupling_on_graphs.png)
 
 * Methods for graphs barycenter using FGW 
 
 ![Alt text](barycircle.png)
+
+* Nested cross validation used for benchmark data sets used in the paper :
+
+```
+python3 nested_cv_fgw.py -dn mutag -d ../data -r ../results -ni 10 -no 50  -fea hamming_dist -st shortest_path -cva True -wl 2 
+
+```
+
 
 ### What will be added ?
 
