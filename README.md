@@ -15,16 +15,20 @@ Feel free to ask if any question
 If you use this toolbox in your research and find it useful, please cite FGW using the following bibtex reference:
 
 ```
-@ARTICLE{vay2018fgw,
-       author = {{Vayer}, Titouan and {Chapel}, Laetitia and {Flamary}, R{\'e}mi and
-         {Tavenard}, Romain and {Courty}, Nicolas},
-        title = "{Optimal Transport for structured data with application on graphs}",
-      journal = {arXiv e-prints},
-     keywords = {Statistics - Machine Learning, Computer Science - Machine Learning},
-         year = "2018",
-archivePrefix = {arXiv},
-       eprint = {1805.09114},
- primaryClass = {stat.ML},
+@InProceedings{vay2019fgw,
+  title =    {Optimal Transport for structured data with application on graphs},
+  author =   {Titouan, Vayer and Courty, Nicolas and Tavenard, Romain and Laetitia, Chapel and Flamary, R{\'e}mi},
+  booktitle =    {Proceedings of the 36th International Conference on Machine Learning},
+  pages =    {6275--6284},
+  year =   {2019},
+  editor =   {Chaudhuri, Kamalika and Salakhutdinov, Ruslan},
+  volume =   {97},
+  series =   {Proceedings of Machine Learning Research},
+  address =    {Long Beach, California, USA},
+  month =    {09--15 Jun},
+  publisher =    {PMLR},
+  pdf =    {http://proceedings.mlr.press/v97/titouan19a/titouan19a.pdf},
+  url =    {http://proceedings.mlr.press/v97/titouan19a.html}
 }
 ```
 
