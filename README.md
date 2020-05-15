@@ -74,11 +74,11 @@ python3 nested_cv_fgw.py -dn mutag -d ../data -r ../results -ni 10 -no 50  -fea 
 	- [graphs_barycenter.ipynb](/examples/graphs_barycenter.ipynb): simple computation of barycenter of multiple labeled graphs
 	- [train_example.ipynb](/examples/train_example.ipynb): simple classification on the Mutag dataset using FGW
 	- [graphs_transport.ipynb](/examples/graphs_transport.ipynb): illustrates how use FGW between labeled graphs and to plot the soft assignment of their nodes
+  - [clustering_example.ipynb](/examples/clustering_example.ipynb): k-means clustering of labeled graphs with FGW
 
 ### What will be added ?
 
-* k-means of multiple graphs
-* Integration in the POT library [1] of FGW 
+* cleaning of k-means of multiple graphs
 * Add other methods for graph kernels
 
 ### Authors
