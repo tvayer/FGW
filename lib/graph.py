@@ -184,7 +184,7 @@ class Graph():
 
 
     def all_matrix_attr(self,return_invd=False):
-        d=dict((k, v) for k, v in self.nx_graph.node.items())
+        d=dict((k, v) for k, v in self.nx_graph.nodes.items())
         x=[]
         invd={}
         try :
