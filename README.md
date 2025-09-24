@@ -1,4 +1,3 @@
-
 # FGW
 
 Python3 implementation of the paper [Optimal Transport for structured data with application on graphs
@@ -42,6 +41,14 @@ If you use this toolbox in your research and find it useful, please cite FGW usi
 * Scipy (>=1.0)
 * Cython (>=0.23)
 * Matplotlib (>=1.5)
+
+You can easily install the required dependencies by using the [uv](https://github.com/astral-sh/uv) Python project manager as follows:
+
+```
+> cd FGW
+> uv sync
+> source .venv/bin/activate
+```
 
 ### Data 
 

@@ -347,7 +347,7 @@ def update_Ms(X,Ys):
 def random_gamma_init(p,q, **kwargs):
     rvs=stats.beta(1e-1,1e-1).rvs
     S=random(len(p), len(q), density=1, data_rvs=rvs)
-    return sinkhorn_scaling(p,q,S.A, **kwargs)
+    return sinkhorn_scaling(p, q, S.toarray(), **kwargs)
 
 
 def update_feature_matrix(lambdas,Ys,Ts,p):

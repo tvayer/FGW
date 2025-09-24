@@ -139,6 +139,15 @@ class Graph():
         if (self.C is None) or force_recompute:
 
             A=nx.adjacency_matrix(self.nx_graph)
+            A=A.tocsr()
+            A=sparse.csr_matrix(
+                (
+                    A.data.astype(np.float64, copy=False),
+                    A.indices.astype(np.int32, copy=False),
+                    A.indptr.astype(np.int32, copy=False),
+                ),
+                shape=A.shape,
+            )
 
             if method=='harmonic_distance':
 

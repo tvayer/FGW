@@ -182,7 +182,7 @@ class GenericSVCClassifier(TransformerMixin):
             X=X.reshape(X.shape[0],) #idem
             Y=Y.reshape(Y.shape[0],) #idem
 
-            if np.all(X==Y):
+            if X.shape == Y.shape and np.array_equal(X, Y):
                 D= np.zeros((X.shape[0], Y.shape[0]))
                 H=np.zeros((X.shape[0], Y.shape[0]))
                 for i, x1 in enumerate(X):
